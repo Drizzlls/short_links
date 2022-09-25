@@ -1,0 +1,48 @@
+{% load static %}
+<header>
+			<div class="topbar d-flex align-items-center">
+				<nav class="navbar navbar-expand justify-content-center">
+					<div class="topbar-logo-header " style="border:none">
+
+						<div class="">
+							<h4 class="logo-text">Приложение Агентов</h4>
+						</div>
+					</div>
+					<div class="mobile-toggle-menu"><i class="bx bx-menu"></i></div>
+
+				</nav>
+			</div>
+		</header>
+
+<div class="nav-container">
+			<div class="mobile-topbar-header">
+
+				<div class="toggle-icon ms-auto"><i class="bx bx-arrow-to-left"></i>
+				</div>
+			</div>
+			<nav class="topbar-nav">
+				<ul class="metismenu" id="menu">
+					<li>
+						<a href="{% url 'all_agents' %}" class=" d-flex justify-content-center">
+							<div class="parent-icon"><i class="bx bx-link"></i>
+							</div>
+							<div class="menu-title">Список Агентов</div>
+						</a>
+
+					</li>
+
+					<li>
+						<a href="{% url 'page_from_add_agent' %}" class=" d-flex justify-content-center">
+							<div class="parent-icon"><i class="bx bx-link"></i>
+							</div>
+							<div class="menu-title">Добавить Агента</div>
+						</a>
+
+					</li>
+
+
+
+
+				</ul>
+			</nav>
+		</div>

@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Страница с ссылками {% endblock %}
+{% block content %}
+<div class="row">
+					<div class="col-xl-7 mx-auto">
+						<div class="card border-top border-0 border-4 border-primary">
+							<div class="card-body p-5">
+								<div class="card-title d-flex align-items-center">
+									<div><i class="bx bxs-user me-1 font-22 text-primary"></i>
+									</div>
+									<h5 class="mb-0 text-primary">Создание ссылок для агентов</h5>
+								</div>
+								<hr>
+								<form class="row g-3" method="post" id="addLinkForm">
+                                        {% csrf_token %}
+									<div class="col-md-6">
+                                        <label for="{{form.name.id_for_label}}" class="form-label">Имя Агента</label>
+                                        {{form.name}}
+									</div>
+
+									<div class="col-md-6">
+                                        <label for="{{form.surname.id_for_label}}" class="form-label">Фамилия Агента</label>
+                                        {{form.surname}}
+
+									</div>
+
+									<div class="col-md-6">
+										<label for="{{form.agent_phone.id_for_label}}" class="form-label">Номер телефона</label>
+										{{form.agent_phone}}
+									</div>
+
+									<div class="col-md-6">
+										<label for="{{form.manager_personal.id_for_label}}" class="form-label">Менеджер</label>
+										{{form.manager_personal}}
+									</div>
+
+									<div class="col-md-6">
+										<label for="{{form.link_agent.id_for_label}}" class="form-label">Ссылка</label>
+                                        <div class="input-group mb-3">
+                                        <button class="btn btn-outline-secondary" type="button"  data-clipboard-target="#linkForAgent" id="button-copy" >Копировать</button>
+										{{form.link_agent}}
+                                            </div>
+									</div>
+									<div class="col-12">
+										<button type="submit" class="btn btn-primary px-5 submit">Получить ссылку</button>
+										<button type="button" class="btn btn-primary px-5 reload" onclick="location.reload(); return false;" style="display:none;"><i class="bx bx-revision mr-1" ></i>Обновить страницу</button>
+									</div>
+								</form>
+							</div>
+						</div>
+
+					</div>
+				</div>
+
+
+
+
+
+
+{% endblock %}

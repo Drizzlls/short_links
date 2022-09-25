@@ -1,0 +1,156 @@
+{% extends 'agents/base.html' %}
+{% load static %}
+{% block title %} Страница с агента {% endblock %}
+{% block content %}
+
+<div class="container">
+					<div class="main-body">
+						<div class="row">
+							<div class="col-lg-4">
+								<div class="card">
+									<div class="card-body">
+										<div class="d-flex flex-column align-items-center text-center">
+											<div class="mt-3">
+												<h4>{{agent.name}} {{agent.surname}} </h4>
+											</div>
+										</div>
+										<hr class="my-4">
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-8">
+								<div class="card">
+
+									<form id="updateThisAgent" method="post" action="">
+
+									<div class="card-body">
+										<div class="row mb-3">
+											{% csrf_token %}
+											<div class="col-sm-3">
+												<h6 class="mb-0">Имя</h6>
+											</div>
+											<div class="col-sm-9 text-secondary">
+												<input type="text" class="form-control" value="{{agent.name}}" name="name">
+											</div>
+										</div>
+										<div class="row mb-3">
+											<div class="col-sm-3">
+												<h6 class="mb-0">Фамилия</h6>
+											</div>
+											<div class="col-sm-9 text-secondary">
+												<input type="text" class="form-control" value="{{agent.surname}}" name="surname">
+											</div>
+										</div>
+										<div class="row mb-3">
+											<div class="col-sm-3">
+												<h6 class="mb-0">Персональная ссылка</h6>
+											</div>
+											<div class="col-sm-9 text-secondary">
+												<input type="text" class="form-control" value="http://127.0.0.1:8000/{{agent.link_agent}}" readonly>
+											</div>
+										</div>
+										<div class="row mb-3">
+											<div class="col-sm-3">
+												<h6 class="mb-0">Количество приглашенных агентов</h6>
+											</div>
+											<div class="col-sm-9 text-secondary">
+												<input type="text" class="form-control" value="{{agent.lenInvited}}" readonly>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-sm-3"></div>
+											<div class="col-sm-9 text-secondary justify-content-between d-flex">
+												<button class="btn btn-primary px-4" type="submit"> Редактировать </button>
+												<button type="button" class="btn btn-primary px-4 btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal"> Удалить </button>
+
+
+											</div>
+										</div>
+									</div>
+										</form>
+
+
+
+
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+
+<div class="col">
+
+										<!-- Modal -->
+										<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+											<div class="modal-dialog">
+												<div class="modal-content">
+													<div class="modal-header">
+														<h5 class="modal-title" id="exampleModalLabel">Удаление {{agent.name}} из списка менеджеров</h5>
+														<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+													</div>
+													<div class="modal-body">Вы уверены, что хотите удалить {{agent.name}} из списка менеджеров?</div>
+													<div class="modal-footer col-lg-12">
+														<form class="row col-12 justify-content-between" method="post" id="deleteThisAgent">
+															{% csrf_token %}
+														<button type="button" class="btn btn-secondary col-3" data-bs-dismiss="modal">Нет</button>
+														<button type="submit" class="btn btn-primary col-3">Да</button>
+														</form>
+
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+
+<script>
+	$(document).ready(function () {
+        $('#deleteThisAgent').submit(function () {
+            $.ajax({
+				data: $(this).serialize(),
+                type: $(this).attr('method'),
+                url: '{% url 'del_agent' agent.pk %}',
+				method: "post",
+                success: function (response) {
+                	if (response == 'True'){
+						alert('Пользователь удален!');
+						window.location.href = '{% url 'all_agents' %}';
+						}
+					else {
+						alert('Пользователь уже был удален ранее!');
+					}
+
+                },
+            });
+            return false;
+        });
+    })
+
+
+	$(document).ready(function () {
+        $('#updateThisAgent').submit(function () {
+            $.ajax({
+                data: $(this).serialize(),
+                type: $(this).attr('method'),
+                url: '{% url 'update_agent' agent.pk %}',
+                success: function (response) {
+                	if (response == 'True'){
+						alert('Пользователь отредактирован!');
+						window.location.reload();
+						}
+					else {
+						alert('Ошибка!');
+					}
+
+                },
+            });
+            return false;
+        });
+    })
+
+
+</script>
+
+
+{% endblock %}
+
